@@ -15,7 +15,6 @@ public class LoggingFilter extends HttpFilter {
 
     private Logger logger;
 
-
     @Override
     public void init() throws ServletException {
         logger = Logger.getLogger("http-logger");
