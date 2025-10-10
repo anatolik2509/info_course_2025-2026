@@ -19,4 +19,5 @@
             <t:task task="${task}"/>
         </c:forEach>
     </c:if>
+    <script src="${pageContext.servletContext.contextPath}/js/script.js"></script>
 </t:layout>
