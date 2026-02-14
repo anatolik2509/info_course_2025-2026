@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="shop" class="ru.itis.info.component.Shop">
+        <constructor-arg name="seller" ref="seller"/>
+        <constructor-arg name="shelves" ref="shelves"/>
+        <constructor-arg name="warehouse" ref="warehouse"/>
+    </bean>
+
+    <bean id="seller" class="ru.itis.info.component.Seller">
+        <constructor-arg name="firstName" value="Super"/>
+        <constructor-arg name="lastName" value="Seller"/>
+    </bean>
+
+    <bean id="foodShelf" class="ru.itis.info.component.Shelf"/>
+    <bean id="clothesShelf" class="ru.itis.info.component.Shelf"/>
+
+    <util:list id="shelves" value-type="ru.itis.info.component.Shelf">
+        <ref bean="foodShelf"/>
+        <ref bean="clothesShelf"/>
+    </util:list>
+
+    <bean id="warehouse" class="ru.itis.info.component.Warehouse"/>
+</beans>
