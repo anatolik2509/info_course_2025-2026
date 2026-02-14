@@ -13,7 +13,6 @@ public class ShopContainer {
     @Autowired
     private Shop autowiredShop;
 
-    @Autowired
     private Shop settedShop;
 
     public ShopContainer(Shop shop) {
