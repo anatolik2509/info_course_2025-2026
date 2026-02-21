@@ -101,7 +101,7 @@
             </div>
         </c:if>
 
-        <form:form modelAttribute="user" method="post" action="/validation/register">
+        <form:form modelAttribute="user" method="post" action="/validation/signUp">
             <div class="form-group">
                 <label for="login">Логин:</label>
                 <form:input path="login" id="login" type="text" />

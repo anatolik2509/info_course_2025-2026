@@ -1,8 +1,8 @@
 package ru.itis.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.itis.service.MessageService;
@@ -15,18 +15,17 @@ public class MyController {
 
     private final MessageService messageService;
 
-    @Autowired
     public MyController(MessageService messageService) {
         this.messageService = messageService;
     }
 
-    @GetMapping
-    public String index(ModelMap map) {
-        map.put("viewVariable", "Index action");
+    @GetMapping("/hello")
+    public String index(Model map) {
+        map.addAttribute("viewVariable", "Index action");
         return "hello";
     }
 
-    @RequestMapping("/s")
+    @RequestMapping(value = "/s")
     public String simple(ModelMap map) {
         map.put("viewVariable", messageService.getMessage());
         return "hello";
