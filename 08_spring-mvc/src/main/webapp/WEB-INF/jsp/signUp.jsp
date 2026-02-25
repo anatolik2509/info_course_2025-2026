@@ -89,7 +89,7 @@
                 <strong>Ошибки валидации:</strong>
                 <ul>
                     <c:forEach var="error" items="${errors}">
-                        <li>${error}</li>
+                        <li>${error.getDefaultMessage()}</li>
                     </c:forEach>
                 </ul>
             </div>
@@ -101,7 +101,7 @@
             </div>
         </c:if>
 
-        <form:form modelAttribute="user" method="post" action="/validation/signUp">
+        <form:form modelAttribute="signUpForm" method="post" action="${pageContext.servletContext.contextPath}/validation/signUp">
             <div class="form-group">
                 <label for="login">Логин:</label>
                 <form:input path="login" id="login" type="text" />
@@ -109,7 +109,7 @@
             </div>
 
             <div class="form-group">
-                <label for="email">Логин:</label>
+                <label for="email">Почта:</label>
                 <form:input path="email" id="email" type="text" />
                 <form:errors path="email" cssClass="field-error" />
             </div>
@@ -124,6 +124,12 @@
                 <label for="passwordRepeat">Подтверждение пароля:</label>
                 <form:input path="passwordRepeat" id="passwordRepeat" type="password" />
                 <form:errors path="passwordRepeat" cssClass="field-error" />
+            </div>
+
+            <div class="form-group">
+                <label for="">Дата рождения:</label>
+                <form:input path="birthDate" id="birthDate" type="text" placeholder="01.01.2000" />
+                <form:errors path="birthDate" cssClass="field-error" />
             </div>
 
             <div class="form-group">

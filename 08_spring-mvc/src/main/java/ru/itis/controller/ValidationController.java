@@ -17,7 +17,7 @@ public class ValidationController {
 
     @ModelAttribute
     public void addAttributes(Model model) {
-        model.addAttribute("user", new SignUpForm());
+        model.addAttribute("signUpForm", new SignUpForm());
     }
 
     @GetMapping
@@ -27,7 +27,11 @@ public class ValidationController {
 
     @PostMapping("/signUp")
     public String signUp(@Valid SignUpForm signUpForm, BindingResult result, ModelMap model) {
-        System.out.println(signUpForm.toString());
+        if (result.hasErrors()) {
+            model.addAttribute("errors", result.getAllErrors());
+        } else {
+            model.addAttribute("success", true);
+        }
         return "signUp";
     }
 }
