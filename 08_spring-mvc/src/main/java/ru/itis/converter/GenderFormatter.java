@@ -1,13 +1,11 @@
 package ru.itis.converter;
 
 import org.springframework.format.Formatter;
-import org.springframework.stereotype.Component;
 import ru.itis.dto.Gender;
 
 import java.text.ParseException;
 import java.util.Locale;
 
-@Component
 public class GenderFormatter implements Formatter<Gender> {
     @Override
     public Gender parse(String text, Locale locale) throws ParseException {
