@@ -22,4 +22,5 @@ public class SignUpForm {
     @NotBlank(message = "Empty password repeat")
     private String passwordRepeat;
     private LocalDate birthDate;
+    private Gender gender;
 }

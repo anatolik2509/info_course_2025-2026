@@ -133,6 +133,12 @@
             </div>
 
             <div class="form-group">
+                <label for="">Пол:</label>
+                <form:input path="gender" id="birthDate" type="text" placeholder="М/Ж" />
+                <form:errors path="gender" cssClass="field-error" />
+            </div>
+
+            <div class="form-group">
                 <input type="submit" value="Зарегистрироваться" />
             </div>
         </form:form>

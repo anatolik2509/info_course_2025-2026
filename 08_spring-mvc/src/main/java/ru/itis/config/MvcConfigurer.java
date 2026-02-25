@@ -11,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import ru.itis.converter.BirthDateConverter;
+import ru.itis.converter.GenderFormatter;
 
 @Configuration
 @EnableWebMvc
@@ -38,5 +39,6 @@ public class MvcConfigurer implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(new BirthDateConverter());
+        registry.addFormatter(new GenderFormatter());
     }
 }
