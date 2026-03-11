@@ -22,7 +22,7 @@ public class MvcConfigurer implements WebMvcConfigurer {
         resolver.setPrefix("/WEB-INF/jsp/");
         resolver.setSuffix(".jsp");
         resolver.setViewClass(JstlView.class);
-        resolver.setRedirectContextRelative(false);
+        resolver.setRedirectContextRelative(true);
         return resolver;
     }
 

@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-todos-table
+      author: instructor
+      changes:
+        - createTable:
+            tableName: todos
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: text
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
