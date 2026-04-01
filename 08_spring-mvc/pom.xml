@@ -112,6 +112,19 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.12.0</version>
         </dependency>
+
+        <!-- Spring Security — веб-фильтры и инфраструктура безопасности -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>6.4.4</version>
+        </dependency>
+        <!-- Spring Security — аннотации, конфигурация (@EnableWebSecurity и др.) -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>6.4.4</version>
+        </dependency>
     </dependencies>
 
     <build>
