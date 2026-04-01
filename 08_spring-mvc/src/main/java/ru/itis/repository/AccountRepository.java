@@ -54,4 +54,12 @@ public class AccountRepository {
                 account.getRole()
         );
     }
+
+    public void updateRole(String username, String role) {
+        jdbcTemplate.update(
+                "UPDATE accounts SET role = ? WHERE username = ?",
+                role,
+                username
+        );
+    }
 }

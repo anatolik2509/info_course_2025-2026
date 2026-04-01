@@ -17,6 +17,13 @@
     </p>
 </c:if>
 
+<c:if test="${!isAdmin}">
+    <form method="post" action="${pageContext.request.contextPath}/user/promote">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <button type="submit">Стать админом</button>
+    </form>
+</c:if>
+
 <form method="post" action="${pageContext.request.contextPath}/logout">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     <button type="submit">Выйти</button>

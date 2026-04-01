@@ -44,4 +44,8 @@ public class AccountService implements UserDetailsService {
                 .build());
         return true;
     }
+
+    public void promoteToAdmin(String username) {
+        accountRepository.updateRole(username, "ROLE_ADMIN");
+    }
 }
