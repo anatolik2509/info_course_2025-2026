@@ -1,17 +1,23 @@
 package org.example.config;
 
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+import org.springframework.web.servlet.support.AbstractDispatcherServletInitializer;
 
-public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class WebAppInitializer extends AbstractDispatcherServletInitializer {
 
     @Override
-    protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{AppConfig.class};
+    protected WebApplicationContext createRootApplicationContext() {
+        return null;
     }
 
     @Override
-    protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{WebConfig.class};
+    protected WebApplicationContext createServletApplicationContext() {
+        AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
+        ctx.register(AppConfig.class);
+        ctx.register(WebConfig.class);
+        return ctx;
     }
 
     @Override
