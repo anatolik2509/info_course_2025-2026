@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(**/k8s/**)"
+    ]
+  },
+  "env": {
+    "NODE_TLS_REJECT_UNAUTHORIZED": "0"
+  }
+}

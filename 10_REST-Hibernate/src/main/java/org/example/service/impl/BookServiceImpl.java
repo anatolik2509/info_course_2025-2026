@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service("bookServiceEntityManager")
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
@@ -42,6 +42,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> searchByTitle(String titleQuery) {
         return bookRepository.searchByTitle(titleQuery);
+    }
+
+    @Override
+    public List<Book> searchByTitleCriteria(String titleQuery) {
+        return bookRepository.searchByTitleCriteria(titleQuery);
     }
 
     @Override

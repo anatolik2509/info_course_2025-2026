@@ -11,6 +11,7 @@ public interface BookRepository {
     List<Book> findAll();
     List<Book> findByCabinetId(Long cabinetId);
     List<Book> searchByTitle(String titleQuery);
+    List<Book> searchByTitleCriteria(String titleQuery);
     void delete(Book book);
     void deleteById(Long id);
 }

@@ -50,6 +50,14 @@ public class BookRestController {
         return ResponseEntity.ok(books);
     }
 
+    @GetMapping("/search-criteria")
+    public ResponseEntity<List<BookDTO>> searchBooksCriteria(@RequestParam String query) {
+        List<BookDTO> books = bookService.searchByTitleCriteria(query).stream()
+                .map(BookDTO::fromEntity)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(books);
+    }
+
     @PostMapping
     public ResponseEntity<BookDTO> createBook(@RequestBody CreateBookRequest request) {
         Cabinet cabinet = cabinetService.findById(request.getCabinetId())

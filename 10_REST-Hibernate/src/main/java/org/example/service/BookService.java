@@ -11,5 +11,6 @@ public interface BookService {
     List<Book> findAll();
     List<Book> findByCabinetId(Long cabinetId);
     List<Book> searchByTitle(String titleQuery);
+    List<Book> searchByTitleCriteria(String titleQuery);
     void deleteById(Long id);
 }
