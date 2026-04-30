@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: notes-postgres
+    environment:
+      POSTGRES_DB: notesdb
+      POSTGRES_USER: notesuser
+      POSTGRES_PASSWORD: notespass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - notes-network
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: notes-app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/notesdb
+      SPRING_DATASOURCE_USERNAME: notesuser
+      SPRING_DATASOURCE_PASSWORD: notespass
+    depends_on:
+      - postgres
+    networks:
+      - notes-network
+
+volumes:
+  postgres-data:
+
+networks:
+  notes-network:
+    driver: bridge
