@@ -14,6 +14,14 @@ services:
       - postgres-data:/var/lib/postgresql/data
     networks:
       - notes-network
+  redis:
+    image: redis:7-alpine
+    container_name: notes-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - notes-network
+
   app:
     build:
       context: .
@@ -25,8 +33,11 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/notesdb
       SPRING_DATASOURCE_USERNAME: notesuser
       SPRING_DATASOURCE_PASSWORD: notespass
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     depends_on:
       - postgres
+      - redis
     networks:
       - notes-network
 

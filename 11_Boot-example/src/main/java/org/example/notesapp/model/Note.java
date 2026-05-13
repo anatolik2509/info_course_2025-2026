@@ -2,7 +2,6 @@ package org.example.notesapp.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
