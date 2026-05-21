@@ -35,14 +35,67 @@ services:
       SPRING_DATASOURCE_PASSWORD: notespass
       REDIS_HOST: redis
       REDIS_PORT: 6379
+      LOGSTASH_HOST: logstash
     depends_on:
       - postgres
       - redis
+      - logstash
+    networks:
+      - notes-network
+
+  prometheus:
+    image: prom/prometheus
+    container_name: notes-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - app
+    networks:
+      - notes-network
+
+  elasticsearch:
+    image: elasticsearch:8.13.0
+    container_name: notes-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    networks:
+      - notes-network
+
+  logstash:
+    image: logstash:8.13.0
+    container_name: notes-logstash
+    volumes:
+      - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    ports:
+      - "5044:5044"
+    depends_on:
+      - elasticsearch
+    networks:
+      - notes-network
+
+  kibana:
+    image: kibana:8.13.0
+    container_name: notes-kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
     networks:
       - notes-network
 
 volumes:
   postgres-data:
+  elasticsearch-data:
 
 networks:
   notes-network:
