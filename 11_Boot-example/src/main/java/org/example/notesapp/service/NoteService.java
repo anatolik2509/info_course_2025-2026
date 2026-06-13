@@ -4,10 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.example.notesapp.cache.NoteCache;
 import org.example.notesapp.dto.NoteEventDto;
+import org.example.notesapp.kafka.NoteEventProducer;
 import org.example.notesapp.model.Note;
 import org.example.notesapp.model.User;
 import org.example.notesapp.repository.NoteRepository;
-import org.example.notesapp.websocket.WebSocketSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +23,9 @@ public class NoteService {
 
     @Autowired
     private NoteCache noteCache;
+
+    @Autowired
+    private NoteEventProducer noteEventProducer;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -89,9 +92,11 @@ public class NoteService {
                     note.getUpdatedAt() != null ? note.getUpdatedAt().toString() : ""
             );
             String json = objectMapper.writeValueAsString(event);
-            WebSocketSessionManager.sendToUser(note.getUser().getUsername(), json);
+            // Публикуем в Kafka — на той же инстанции (или на другой)
+            // событие будет прочитано NoteEventConsumer и отправлено в WebSocket-сессии.
+            noteEventProducer.publish(note.getUser().getUsername(), json);
         } catch (Exception e) {
-            log.error("Ошибка отправки WebSocket-события: {}", e.getMessage());
+            log.error("Ошибка публикации события в Kafka: {}", e.getMessage());
         }
     }
 }

@@ -22,6 +22,48 @@ services:
     networks:
       - notes-network
 
+  kafka:
+    image: apache/kafka:3.7.0
+    container_name: notes-kafka
+    ports:
+      # 9092 - для контейнеров внутри docker-сети (advertised как kafka:9092)
+      # 29092 - для подключения с хоста (advertised как localhost:29092)
+      - "9092:9092"
+      - "29092:29092"
+    environment:
+      # KRaft-режим: один узел совмещает роли broker и controller (без Zookeeper)
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_LISTENERS: INTERNAL://:9092,CONTROLLER://:9093,EXTERNAL://:29092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,EXTERNAL://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      # Один брокер => коэффициенты репликации = 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      # Топики создаются автоматически при первой публикации (для учебных целей)
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+    networks:
+      - notes-network
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: notes-kafka-ui
+    ports:
+      - "8090:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+    depends_on:
+      - kafka
+    networks:
+      - notes-network
+
   app:
     build:
       context: .
@@ -36,10 +78,12 @@ services:
       REDIS_HOST: redis
       REDIS_PORT: 6379
       LOGSTASH_HOST: logstash
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     depends_on:
       - postgres
       - redis
       - logstash
+      - kafka
     networks:
       - notes-network
 

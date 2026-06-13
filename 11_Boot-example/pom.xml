@@ -66,6 +66,13 @@
             <version>5.1.0</version>
         </dependency>
 
+        <!-- Apache Kafka клиент (без spring-kafka и без auto-configuration) -->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>3.7.0</version>
+        </dependency>
+
         <!-- Spring Boot Actuator (health, metrics, info endpoints) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
